@@ -66,7 +66,7 @@ function CoverSlide() {
         </div>
       </div>
       <div className="cover-image" aria-hidden="true">
-        <Image src="/beauty/hero-beauty.webp" alt="" fill priority sizes="(max-width: 760px) 100vw, 54vw" />
+        <Image src="/beauty/hero-ai-beauty.webp" alt="" fill priority sizes="(max-width: 760px) 100vw, 54vw" />
       </div>
     </div>
   );
@@ -89,8 +89,8 @@ function StageSlide({ stage }: { stage: ProposalStage }) {
         {hasVisual && (
           <div className={`stage-visual stage-visual-${stage.visual}`}>
             <Image
-              src={stage.visual === "ugc" ? "/beauty/ugc-creator.webp" : "/beauty/serum-texture.webp"}
-              alt={stage.visual === "ugc" ? "Создатель контента снимает уход за кожей" : "Текстуры сыворотки и стекла"}
+              src={stage.visual === "ugc" ? "/beauty/ugc-ai-analysis-v2.webp" : "/beauty/packaging-ai-concept.webp"}
+              alt={stage.visual === "ugc" ? "Создатель контента использует ИИ-анализ внешности на смартфоне" : "Концепция маркетинговой упаковки beauty-tech проекта с ИИ-анализом"}
               fill
               sizes="(max-width: 760px) 100vw, 38vw"
             />
@@ -316,8 +316,8 @@ export function BeautyPresentation() {
           ))}
         </div>
         <div className="nav-arrows">
-          <button type="button" onClick={previous} disabled={activeIndex === 0} aria-label="Предыдущий экран"><ArrowLeft size={20} weight="bold" aria-hidden="true" /></button>
-          <button type="button" onClick={next} disabled={activeIndex === slideCount - 1} aria-label="Следующий экран"><ArrowRight size={20} weight="bold" aria-hidden="true" /></button>
+          <button type="button" onClick={previous} disabled={activeIndex === 0} aria-label="Предыдущий экран"><ArrowLeft size={24} weight="bold" aria-hidden="true" /></button>
+          <button type="button" onClick={next} disabled={activeIndex === slideCount - 1} aria-label="Следующий экран"><ArrowRight size={24} weight="bold" aria-hidden="true" /></button>
         </div>
       </nav>
     </div>
