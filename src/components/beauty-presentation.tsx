@@ -1,7 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, DownloadSimple } from "@phosphor-icons/react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  ChatCircleText,
+  DownloadSimple,
+  Phone,
+  TelegramLogo,
+} from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { proposalStages, roadmap, type ProposalStage } from "@/content/beauty-proposal";
@@ -9,7 +17,7 @@ import { proposalStages, roadmap, type ProposalStage } from "@/content/beauty-pr
 type TransitionAxis = "x" | "y";
 type MotionIntent = { axis: TransitionAxis; direction: number; reduce: boolean };
 
-const slideCount = proposalStages.length + 2;
+const slideCount = proposalStages.length + 3;
 const clampIndex = (value: number) => Math.max(0, Math.min(slideCount - 1, value));
 const slideHash = (index: number) => `#slide-${index + 1}`;
 
@@ -142,9 +150,51 @@ function RoadmapSlide() {
   );
 }
 
+function ContactSlide() {
+  return (
+    <div className="slide-layout contact-slide">
+      <div className="contact-message">
+        <p className="slide-eyebrow">Следующий шаг</p>
+        <h2 data-slide-title tabIndex={-1}>Давайте обсудим запуск</h2>
+        <div className="proposal-validity">
+          <span>КП действует до</span>
+          <strong>28.09.2026 г.</strong>
+        </div>
+      </div>
+
+      <div className="contact-panel">
+        <div className="contact-person">
+          <span>Контакты для связи</span>
+          <strong>Екатерина</strong>
+          <a href="tel:+79688663960">+7 (968) 866-39-60</a>
+        </div>
+
+        <div className="contact-actions">
+          <a href="https://t.me/kitciune" target="_blank" rel="noreferrer">
+            <TelegramLogo size={24} weight="fill" aria-hidden="true" />
+            <span><small>Написать в</small>Telegram</span>
+            <ArrowUpRight size={20} weight="bold" aria-hidden="true" />
+          </a>
+          <a href="https://max.ru/u/f9LHodD0cOKuvO7Pt3zS0Puc3guQ4SPZsPHIvbERTa0RWA5Lmy4Wjv96dPU" target="_blank" rel="noreferrer">
+            <ChatCircleText size={24} weight="fill" aria-hidden="true" />
+            <span><small>Написать в</small>MAX</span>
+            <ArrowUpRight size={20} weight="bold" aria-hidden="true" />
+          </a>
+        </div>
+
+        <a className="contact-phone" href="tel:+79688663960">
+          <Phone size={20} weight="fill" aria-hidden="true" />
+          Позвонить Екатерине
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function SlideContent({ index }: { index: number }) {
   if (index === 0) return <CoverSlide />;
-  if (index === slideCount - 1) return <RoadmapSlide />;
+  if (index === slideCount - 2) return <RoadmapSlide />;
+  if (index === slideCount - 1) return <ContactSlide />;
   return <StageSlide stage={proposalStages[index - 1]} />;
 }
 

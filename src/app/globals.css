@@ -98,6 +98,31 @@ h2 { max-width: 980px; font-size: clamp(42px, 4.25vw, 76px); }
 .download-link:hover { background: #d0efd8; transform: translateY(-2px); }
 .download-link:active { transform: scale(.98); }
 
+.contact-slide { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(420px, .92fr); align-items: end; gap: clamp(42px, 8vw, 150px); }
+.contact-message { align-self: center; }
+.contact-message h2 { max-width: 760px; }
+.proposal-validity { display: flex; align-items: baseline; gap: clamp(18px, 2.6vw, 42px); margin-top: clamp(52px, 9vh, 104px); padding-top: 22px; border-top: 1px solid var(--border); }
+.proposal-validity span { color: var(--text-muted); font-size: 12px; font-weight: 620; letter-spacing: .12em; text-transform: uppercase; }
+.proposal-validity strong { color: var(--accent-strong); font-size: clamp(24px, 2.25vw, 38px); font-weight: 470; letter-spacing: -.035em; white-space: nowrap; }
+.contact-panel { align-self: center; padding: clamp(24px, 3vw, 42px); border: 1px solid rgb(185 227 196 / 18%); border-radius: var(--radius); background: linear-gradient(145deg, rgb(156 200 168 / 10%), rgb(242 245 241 / 3%) 55%), var(--surface); box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%); }
+.contact-person { padding-bottom: clamp(24px, 4vh, 42px); }
+.contact-person span, .contact-person strong, .contact-person a { display: block; }
+.contact-person span { color: var(--text-muted); font-size: 11px; font-weight: 650; letter-spacing: .14em; text-transform: uppercase; }
+.contact-person strong { margin-top: 18px; font-size: clamp(32px, 3.25vw, 54px); font-weight: 430; letter-spacing: -.045em; }
+.contact-person > a { width: fit-content; margin-top: 8px; color: var(--text-secondary); font-size: clamp(17px, 1.3vw, 22px); transition: color 180ms ease; }
+.contact-person > a:hover { color: var(--accent-strong); }
+.contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.contact-actions > a { display: grid; grid-template-columns: 26px minmax(0, 1fr) 20px; align-items: center; gap: 12px; min-height: 78px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 10px; background: rgb(242 245 241 / 4%); transition: border-color 180ms ease, background-color 180ms ease, transform 180ms ease; }
+.contact-actions > a:hover { border-color: rgb(185 227 196 / 40%); background: rgb(185 227 196 / 10%); transform: translateY(-2px); }
+.contact-actions > a:active { transform: scale(.98); }
+.contact-actions > a > svg:first-child { color: var(--accent-strong); }
+.contact-actions > a > svg:last-child { color: var(--text-muted); }
+.contact-actions span { min-width: 0; font-size: 15px; font-weight: 650; }
+.contact-actions small { display: block; margin-bottom: 3px; color: var(--text-muted); font-size: 10px; font-weight: 520; letter-spacing: .08em; text-transform: uppercase; }
+.contact-phone { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 50px; margin-top: 10px; border-radius: 10px; background: var(--accent-strong); color: #122016; font-size: 14px; font-weight: 720; transition: background-color 180ms ease, transform 180ms ease; }
+.contact-phone:hover { background: #d0efd8; transform: translateY(-2px); }
+.contact-phone:active { transform: scale(.98); }
+
 .beauty-nav { position: fixed; z-index: 30; left: var(--page-x); right: var(--page-x); bottom: clamp(18px, 2.4vh, 26px); display: flex; align-items: center; height: 40px; pointer-events: none; }
 .slide-counter { color: var(--text-muted); font-size: 10px; font-weight: 650; letter-spacing: .12em; }
 .slide-rail { display: flex; align-items: center; gap: 6px; margin-left: 18px; pointer-events: auto; }
@@ -155,6 +180,13 @@ h2 { max-width: 980px; font-size: clamp(42px, 4.25vw, 76px); }
   .roadmap-track h3 { margin-top: 10px; }
   .roadmap-footer { align-items: flex-start; flex-direction: column; margin-top: 12px; }
   .download-link { width: 100%; }
+  .contact-slide { display: flex; flex-direction: column; justify-content: center; gap: 34px; }
+  .contact-message { align-self: stretch; }
+  .proposal-validity { align-items: flex-start; flex-direction: column; gap: 8px; margin-top: 34px; padding-top: 16px; }
+  .contact-panel { align-self: stretch; padding: 20px; }
+  .contact-person { padding-bottom: 24px; }
+  .contact-actions { grid-template-columns: 1fr; }
+  .contact-actions > a { min-height: 64px; }
   .beauty-nav { left: 18px; right: 18px; bottom: 12px; }
   .slide-rail { display: none; }
 }
