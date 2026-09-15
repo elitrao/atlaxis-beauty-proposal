@@ -6,8 +6,6 @@ import {
   ArrowRight,
   ArrowUpRight,
   ChatCircleText,
-  DownloadSimple,
-  Phone,
   TelegramLogo,
 } from "@phosphor-icons/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -141,10 +139,6 @@ function RoadmapSlide() {
       </div>
       <div className="roadmap-footer">
         <p>Запускаем. Измеряем. Усиливаем то, что приносит заявки. Масштабируем.</p>
-        <a className="download-link" href="/ATLAXIS-BEAUTY-proposal.pptx" download>
-          <DownloadSimple size={20} weight="bold" aria-hidden="true" />
-          Скачать КП
-        </a>
       </div>
     </div>
   );
@@ -182,10 +176,6 @@ function ContactSlide() {
           </a>
         </div>
 
-        <a className="contact-phone" href="tel:+79688663960">
-          <Phone size={20} weight="fill" aria-hidden="true" />
-          Позвонить Екатерине
-        </a>
       </div>
     </div>
   );
