@@ -77,12 +77,12 @@ function CoverSlide() {
     <div className="slide-layout cover-slide" onPointerMove={handlePointerMove} onPointerLeave={resetImagePosition}>
       <div className="cover-copy">
         <p className="slide-eyebrow">Коммерческое предложение</p>
-        <h1 data-slide-title tabIndex={-1}>Маркетинговая упаковка проекта</h1>
-        <p className="cover-summary">Упаковка, SEO, сайт и контент для запуска ATLAXIS BEAUTY.</p>
+        <h1 data-slide-title tabIndex={-1}>Ценность продукта и маркетинг</h1>
+        <p className="cover-summary">Сначала проверяем спрос и ценность. Затем строим маркетинг на подтверждённых данных.</p>
         <div className="cover-metrics" aria-label="Параметры проекта">
-          <div><strong>120</strong><span>часов</span></div>
-          <div><strong>180 000 ₽</strong><span>стоимость</span></div>
-          <div><strong>2 месяца</strong><span>срок</span></div>
+          <div><strong>158</strong><span>часов</span></div>
+          <div><strong>237 000 ₽</strong><span>стоимость</span></div>
+          <div><strong>до 10 недель</strong><span>срок</span></div>
         </div>
       </div>
       <div className="cover-image" aria-hidden="true">
@@ -171,9 +171,9 @@ function ValueTransitionSlide() {
   return (
     <div className="slide-layout value-transition-slide">
       <div>
-        <p className="slide-eyebrow">Следующая часть</p>
-        <h2 data-slide-title tabIndex={-1}>Теперь о том, с чего начинается результат</h2>
-        <p>Маркетинговую систему мы уже описали. Перед её реализацией важно проверить основу: ценность продукта и данные для продаж.</p>
+        <p className="slide-eyebrow">Этап 1 завершён</p>
+        <h2 data-slide-title tabIndex={-1}>Ценность проверена. Теперь реализуем маркетинг.</h2>
+        <p>Есть понимание спроса, продукта и аргументов для продаж. Переводим эту основу в упаковку, SEO, сайт, контент и аналитику.</p>
       </div>
       <span className="transition-number" aria-hidden="true">02</span>
     </div>
@@ -348,16 +348,17 @@ function ContactSlide() {
 
 function SlideContent({ index }: { index: number }) {
   if (index === 0) return <CoverSlide />;
-  if (index === proposalStages.length + 1) return <RoadmapSlide />;
-  if (index === proposalStages.length + 2) return <ValueTransitionSlide />;
-  if (index === proposalStages.length + 3) return <TwoStagesSlide />;
-  if (index === proposalStages.length + 4) return <ValueResearchSlide />;
-  if (index === proposalStages.length + 5) return <DecisionToolSlide />;
-  if (index === proposalStages.length + 6) return <ValueOutcomeSlide />;
-  if (index === proposalStages.length + 7) return <PredictableBenefitSlide />;
-  if (index === proposalStages.length + 8) return <FinalSummarySlide />;
+  if (index === 1) return <TwoStagesSlide />;
+  if (index === 2) return <ValueResearchSlide />;
+  if (index === 3) return <DecisionToolSlide />;
+  if (index === 4) return <ValueOutcomeSlide />;
+  if (index === 5) return <ValueTransitionSlide />;
+  if (index >= 6 && index <= 10) return <StageSlide stage={proposalStages[index - 6]} />;
+  if (index === 11) return <RoadmapSlide />;
+  if (index === 12) return <PredictableBenefitSlide />;
+  if (index === 13) return <FinalSummarySlide />;
   if (index === slideCount - 1) return <ContactSlide />;
-  return <StageSlide stage={proposalStages[index - 1]} />;
+  return null;
 }
 
 export function BeautyPresentation() {
@@ -446,7 +447,7 @@ export function BeautyPresentation() {
       <motion.div className="beauty-glow" aria-hidden="true" animate={{ x: `${(activeIndex % 3) * 12 - 10}vw`, y: `${((activeIndex + 1) % 3) * 5 - 6}vh`, opacity: activeIndex === 0 ? 0.4 : 0.2 }} transition={{ duration: reduceMotion ? 0 : 1.1, ease: [0.16, 1, 0.3, 1] }} />
       <header className="beauty-header">
         <Brand />
-        <span className="header-caption">Маркетинговая упаковка</span>
+        <span className="header-caption">Ценность и маркетинг</span>
       </header>
 
       <main className="beauty-viewport" aria-live="polite">
