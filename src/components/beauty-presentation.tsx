@@ -5,17 +5,22 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  ChartLineUp,
   ChatCircleText,
+  CheckCircle,
+  MagnifyingGlass,
+  Target,
   TelegramLogo,
 } from "@phosphor-icons/react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { proposalStages, roadmap, type ProposalStage } from "@/content/beauty-proposal";
 
 type TransitionAxis = "x" | "y";
 type MotionIntent = { axis: TransitionAxis; direction: number; reduce: boolean };
 
-const slideCount = proposalStages.length + 3;
+const extensionSlides = 7;
+const slideCount = proposalStages.length + 3 + extensionSlides;
 const clampIndex = (value: number) => Math.max(0, Math.min(slideCount - 1, value));
 const slideHash = (index: number) => `#slide-${index + 1}`;
 
@@ -49,10 +54,27 @@ function Brand() {
     </div>
   );
 }
-
 function CoverSlide() {
+  const reduceMotion = useReducedMotion();
+  const imageX = useMotionValue(0);
+  const imageY = useMotionValue(0);
+  const smoothX = useSpring(imageX, { stiffness: 72, damping: 22, mass: 0.75 });
+  const smoothY = useSpring(imageY, { stiffness: 72, damping: 22, mass: 0.75 });
+
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    imageX.set(((event.clientX - bounds.left) / bounds.width - 0.5) * 18);
+    imageY.set(((event.clientY - bounds.top) / bounds.height - 0.5) * 12);
+  };
+
+  const resetImagePosition = () => {
+    imageX.set(0);
+    imageY.set(0);
+  };
+
   return (
-    <div className="slide-layout cover-slide">
+    <div className="slide-layout cover-slide" onPointerMove={handlePointerMove} onPointerLeave={resetImagePosition}>
       <div className="cover-copy">
         <p className="slide-eyebrow">Коммерческое предложение</p>
         <h1 data-slide-title tabIndex={-1}>Маркетинговая упаковка проекта</h1>
@@ -64,12 +86,13 @@ function CoverSlide() {
         </div>
       </div>
       <div className="cover-image" aria-hidden="true">
-        <Image src="/beauty/hero-ai-beauty.webp" alt="" fill priority sizes="(max-width: 760px) 100vw, 54vw" />
+        <motion.div className="cover-image-motion" style={{ x: smoothX, y: smoothY }}>
+          <Image src="/beauty/hero-ai-beauty.webp" alt="" fill priority sizes="(max-width: 760px) 100vw, 54vw" />
+        </motion.div>
       </div>
     </div>
   );
 }
-
 function StageSlide({ stage }: { stage: ProposalStage }) {
   const hasVisual = Boolean(stage.visual);
   return (
@@ -144,6 +167,148 @@ function RoadmapSlide() {
   );
 }
 
+function ValueTransitionSlide() {
+  return (
+    <div className="slide-layout value-transition-slide">
+      <div>
+        <p className="slide-eyebrow">Следующая часть</p>
+        <h2 data-slide-title tabIndex={-1}>Теперь о том, с чего начинается результат</h2>
+        <p>Маркетинговую систему мы уже описали. Перед её реализацией важно проверить основу: ценность продукта и данные для продаж.</p>
+      </div>
+      <span className="transition-number" aria-hidden="true">02</span>
+    </div>
+  );
+}
+
+function TwoStagesSlide() {
+  return (
+    <div className="slide-layout extension-slide two-stages-slide">
+      <div className="extension-heading">
+        <p className="slide-eyebrow">Полный путь к результату</p>
+        <h2 data-slide-title tabIndex={-1}>Сначала ценность. Затем маркетинг.</h2>
+        <p>Маркетинг становится предсказуемее, когда команда знает, что нужно рынку и на каких данных строить продажи.</p>
+      </div>
+      <div className="phase-grid">
+        <article>
+          <span>Этап 1</span>
+          <h3>Проверить ценность продукта</h3>
+          <p>Исследуем спрос, намерения и предложения конкурентов. Формируем ценность, УТП и офферы.</p>
+          <div><strong>38 ч</strong><strong>57 000 ₽</strong><strong>2 недели</strong></div>
+        </article>
+        <article className="phase-card-accent">
+          <span>Этап 2</span>
+          <h3>Реализовать маркетинг</h3>
+          <p>Переводим проверенную основу в упаковку, SEO, сайт, контент и управляемую аналитику.</p>
+          <div><strong>120 ч</strong><strong>180 000 ₽</strong><strong>2 месяца</strong></div>
+        </article>
+      </div>
+    </div>
+  );
+}
+
+function ValueResearchSlide() {
+  return (
+    <div className="slide-layout extension-slide value-research-slide">
+      <div className="extension-heading">
+        <p className="slide-eyebrow">Этап 1 / исследование</p>
+        <h2 data-slide-title tabIndex={-1}>Не придумываем ценность. Находим её в спросе.</h2>
+      </div>
+      <div className="research-grid">
+        <article><MagnifyingGlass size={30} aria-hidden="true" /><span>01 / 20 ч</span><h3>Спрос и намерения</h3><p>Какие задачи люди уже пытаются решить и какими словами формулируют желаемый результат.</p></article>
+        <article><Target size={30} aria-hidden="true" /><span>02 / 18 ч</span><h3>Предложения конкурентов</h3><p>Что рынок обещает сейчас, где предложения похожи друг на друга и какие ожидания остаются без ответа.</p></article>
+        <article><ChartLineUp size={30} aria-hidden="true" /><span>Опционально / 14 ч</span><h3>Неудовлетворённый спрос</h3><p>Ищем продуктовую возможность, которая ценнее привычного решения и лучше ведёт клиента к выбору.</p></article>
+      </div>
+      <p className="extension-result"><span>Результат</span>Подтверждённая логика продукта вместо гипотез, построенных только на внутреннем видении.</p>
+    </div>
+  );
+}
+
+function DecisionToolSlide() {
+  return (
+    <div className="slide-layout extension-slide decision-slide">
+      <div className="decision-copy">
+        <p className="slide-eyebrow">Пример продуктовой ценности</p>
+        <h2 data-slide-title tabIndex={-1}>От симулятора к инструменту выбора</h2>
+        <div className="scenario-list">
+          <article><span>Слабее</span><p>Показать, как будут выглядеть губы после 2 мл. Клиент уже должен выбрать процедуру и объём.</p></article>
+          <article className="scenario-strong"><span>Сильнее</span><p>Показать желаемую форму, а затем рекомендовать процедуру и объём для её достижения.</p></article>
+        </div>
+        <div className="demand-row"><p><strong>114 111</strong><span>запросов «губы после увеличения»</span></p><p><strong>16 638</strong><span>запросов «формы губ»</span></p></div>
+      </div>
+      <div className="decision-image">
+        <Image src="/beauty/value-consultation-ai.webp" alt="Консультация по выбору результата процедуры с помощью ИИ" fill sizes="(max-width: 760px) 100vw, 45vw" />
+      </div>
+    </div>
+  );
+}
+
+function ValueOutcomeSlide() {
+  const outcomes = [
+    "Карта спроса и намерений аудитории",
+    "Понимание сильных и слабых предложений рынка",
+    "Сегменты и потребности, на которых строятся продажи",
+    "Ценность продукта, УТП и система офферов",
+  ];
+  return (
+    <div className="slide-layout extension-slide value-outcome-slide">
+      <div className="extension-heading">
+        <p className="slide-eyebrow">Результат этапа 1</p>
+        <h2 data-slide-title tabIndex={-1}>Команда знает, что продавать и почему это покупают</h2>
+      </div>
+      <div className="outcome-layout">
+        <div className="outcome-list">{outcomes.map((item) => <p key={item}><CheckCircle size={24} weight="fill" aria-hidden="true" />{item}</p>)}</div>
+        <aside><span>Стоимость этапа</span><strong>57 000 ₽</strong><p>38 часов работы<br />до 2 недель</p><small>Дополнительный анализ неудовлетворённого спроса: 14 часов.</small></aside>
+      </div>
+    </div>
+  );
+}
+
+function PredictableBenefitSlide() {
+  const steps = [
+    ["01", "Ценность проверена", "Есть подтверждённая потребность и понятный результат для клиента."],
+    ["02", "Есть данные для продаж", "Офферы и аргументы опираются на спрос, а не на догадки."],
+    ["03", "Маркетинг реализован", "Сайт, SEO, контент и аналитика работают как одна система."],
+    ["04", "Выгода планируется", "Решения можно измерять, усиливать и масштабировать."],
+  ];
+  return (
+    <div className="slide-layout extension-slide benefit-slide">
+      <div className="extension-heading">
+        <p className="slide-eyebrow">Главный эффект</p>
+        <h2 data-slide-title tabIndex={-1}>Проверенная ценность делает маркетинг управляемым</h2>
+      </div>
+      <div className="benefit-flow">{steps.map(([number, title, text]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{text}</p></article>)}</div>
+      <p className="benefit-thesis">Когда ценность подтверждена и у команды есть данные для продаж, реализованный маркетинг приносит не случайный эффект, а планируемую выгоду.</p>
+    </div>
+  );
+}
+
+function FinalSummarySlide() {
+  return (
+    <div className="slide-layout extension-slide final-summary-slide">
+      <div className="extension-heading">
+        <p className="slide-eyebrow">Итог предложения</p>
+        <h2 data-slide-title tabIndex={-1}>Два этапа. Одна логика результата.</h2>
+      </div>
+      <div className="summary-stages">
+        <article>
+          <span>01</span>
+          <div><small>Сначала</small><h3>Проверяем ценность</h3><p>Спрос, намерения, конкуренты, УТП и офферы.</p></div>
+          <strong>57 000 ₽<small>38 часов / до 2 недель</small></strong>
+        </article>
+        <article>
+          <span>02</span>
+          <div><small>Затем</small><h3>Реализуем маркетинг</h3><p>Упаковка, SEO, сайт, UGC и аналитика.</p></div>
+          <strong>180 000 ₽<small>120 часов / 2 месяца</small></strong>
+        </article>
+      </div>
+      <div className="summary-total">
+        <p>Проверенная ценность даёт данные для продаж. Реализованный на них маркетинг помогает получать планируемую выгоду.</p>
+        <div><span>Весь проект</span><strong>237 000 ₽</strong><small>158 часов / до 10 недель</small></div>
+      </div>
+    </div>
+  );
+}
+
 function ContactSlide() {
   return (
     <div className="slide-layout contact-slide">
@@ -183,7 +348,14 @@ function ContactSlide() {
 
 function SlideContent({ index }: { index: number }) {
   if (index === 0) return <CoverSlide />;
-  if (index === slideCount - 2) return <RoadmapSlide />;
+  if (index === proposalStages.length + 1) return <RoadmapSlide />;
+  if (index === proposalStages.length + 2) return <ValueTransitionSlide />;
+  if (index === proposalStages.length + 3) return <TwoStagesSlide />;
+  if (index === proposalStages.length + 4) return <ValueResearchSlide />;
+  if (index === proposalStages.length + 5) return <DecisionToolSlide />;
+  if (index === proposalStages.length + 6) return <ValueOutcomeSlide />;
+  if (index === proposalStages.length + 7) return <PredictableBenefitSlide />;
+  if (index === proposalStages.length + 8) return <FinalSummarySlide />;
   if (index === slideCount - 1) return <ContactSlide />;
   return <StageSlide stage={proposalStages[index - 1]} />;
 }
