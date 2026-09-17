@@ -227,16 +227,35 @@ function DecisionToolSlide() {
   return (
     <div className="slide-layout extension-slide decision-slide">
       <div className="decision-copy">
-        <p className="slide-eyebrow">Пример продуктовой ценности</p>
-        <h2 data-slide-title tabIndex={-1}>От симулятора к инструменту выбора</h2>
-        <div className="scenario-list">
-          <article><span>Слабее</span><p>Показать, как будут выглядеть губы после 2 мл. Клиент уже должен выбрать процедуру и объём.</p></article>
-          <article className="scenario-strong"><span>Сильнее</span><p>Показать желаемую форму, а затем рекомендовать процедуру и объём для её достижения.</p></article>
+        <p className="slide-eyebrow">Как анализ спроса меняет продукт</p>
+        <h2 data-slide-title tabIndex={-1}>Люди ищут результат, а не 2 мл препарата</h2>
+
+        <div className="decision-comparison">
+          <article>
+            <span>Поздний вход</span>
+            <h3>«Покажите, как выглядят 2 мл»</h3>
+            <p>Клиент уже выбрал процедуру и объём. Продукт визуализирует принятое решение.</p>
+          </article>
+          <article className="scenario-strong">
+            <span>Ранний вход</span>
+            <h3>«Хочу такие губы. Что мне нужно?»</h3>
+            <p>Клиент знает только желаемый результат. Продукт подбирает способ и ведёт к записи.</p>
+          </article>
         </div>
-        <div className="demand-row"><p><strong>114 111</strong><span>запросов «губы после увеличения»</span></p><p><strong>16 638</strong><span>запросов «формы губ»</span></p></div>
-      </div>
-      <div className="decision-image">
-        <Image src="/beauty/value-consultation-ai.webp" alt="Консультация по выбору результата процедуры с помощью ИИ" fill sizes="(max-width: 760px) 100vw, 45vw" />
+
+        <div className="demand-proof">
+          <div className="demand-row">
+            <p><strong>114 111</strong><span>ищут, как выглядят губы после увеличения</span></p>
+            <p><strong>16 638</strong><span>сравнивают и выбирают формы губ</span></p>
+          </div>
+          <p className="demand-insight"><span>Что означают цифры</span>Оба крупных кластера описывают внешний результат. Ни один не начинается с объёма препарата.</p>
+        </div>
+
+        <div className="decision-conclusion">
+          <span>Зачем нужен анализ</span>
+          <p>Без него мы бы упаковали узкий симулятор. Данные открывают более ценную задачу: помочь выбрать результат и привести к покупке услуги.</p>
+        </div>
+
       </div>
     </div>
   );
