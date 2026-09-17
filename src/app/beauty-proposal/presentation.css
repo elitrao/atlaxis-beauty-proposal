@@ -195,7 +195,7 @@
   .beauty-presentation .analysis-takeaway { margin-top: 13px; padding-top: 10px; }
 }
 @media (max-width: 760px) {
-  .beauty-presentation .demand-analysis-slide { padding: 74px 18px 86px; justify-content: flex-start; }
+  .beauty-presentation .demand-analysis-slide { height: auto; min-height: 100dvh; overflow: visible; padding: 74px 18px 100px; justify-content: flex-start; }
   .analysis-heading { align-items: center; gap: 10px; }
   .demand-analysis-slide .slide-eyebrow { display: none; }
   .beauty-presentation .demand-analysis-slide h2 { font-size: 27px; }
@@ -215,10 +215,10 @@
   .analysis-query { align-items: start; gap: 4px; }
   .analysis-query > span { font-size: 10px; }
   .analysis-query > strong { font-size: 15px; }
-  .analysis-expectations { margin: 0; display: none; }
+  .analysis-expectations { grid-column: 1 / -1; margin: 4px 0; display: block; }
   .analysis-expectations .analysis-label { font-size: 8px; margin-bottom: 6px; }
-  .analysis-expectations ul { grid-template-columns: 1fr; gap: 4px; }
-  .analysis-expectations li { font-size: 10px; gap: 4px; }
+  .analysis-expectations ul { grid-template-columns: 1fr; gap: 6px; }
+  .analysis-expectations li { font-size: 12px; gap: 6px; }
   .analysis-expectations svg { width: 12px; height: 12px; }
   .hypothesis-intent { grid-column: 1 / -1; padding: 9px 12px; }
   .hypothesis-offer { grid-column: 1 / -1; margin-top: 2px; padding: 8px 10px; }
@@ -231,7 +231,7 @@
   .beauty-presentation .analysis-footnote { font-size: 8px; }
 }
 @media (max-width: 760px) and (max-height: 740px) {
-  .beauty-presentation .demand-analysis-slide { padding-top: 68px; padding-bottom: 80px; }
+  .beauty-presentation .demand-analysis-slide { padding-top: 68px; padding-bottom: 100px; }
   .hypothesis-grid { gap: 10px; margin-top: 10px; }
   .hypothesis-column { gap: 7px 10px; padding-top: 8px; }
   .hypothesis-title h3 { font-size: 16px; }
@@ -250,8 +250,8 @@
   .demand-analysis-slide .analysis-queries { padding: 7px; }
   .demand-analysis-slide .analysis-queries > .analysis-label { display: none; }
   .demand-analysis-slide .analysis-expectations .analysis-label { font-size: 7px; margin-bottom: 4px; }
-  .demand-analysis-slide .analysis-expectations li { font-size: 9px; }
-  .demand-analysis-slide .analysis-expectations ul { gap: 2px; }
+  .demand-analysis-slide .analysis-expectations li { font-size: 12px; }
+  .demand-analysis-slide .analysis-expectations ul { gap: 6px; }
   .demand-analysis-slide .hypothesis-intent { padding: 6px 10px; }
   .demand-analysis-slide .hypothesis-intent > strong { font-size: 12px; white-space: nowrap; }
   .hypothesis-metrics { margin-top: 4px; }

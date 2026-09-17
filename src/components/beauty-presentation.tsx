@@ -233,7 +233,7 @@ function DecisionToolSlide() {
       conclusion: "Больше запросов. Слабее связь с покупкой.",
       intent: "Информационный спрос",
       offer: "Примеры результатов на чужих фото и визуализация на вашем лице — одно изображение с выбранными препаратом и объёмом.",
-      ctr: "3–5%", conversion: "1–2%", leads: "10–20",
+      ctr: "0,5–1%", conversion: "0,1–0,3%", leads: "1–3",
     },
     {
       number: "02", title: "Выбрать, как получить результат",
@@ -242,7 +242,7 @@ function DecisionToolSlide() {
       outcomes: ["Подбор визуала с учётом черт лица", "Подбор процедуры, препарата и объёма", "Примерка вариантов на своём лице", "Персональная консультация врача"],
       conclusion: "Меньше запросов. Ближе к покупке.",
       intent: "Коммерческий спрос",
-      offer: "Образ с учётом ваших черт лица. Ваш врач: персональная оценка здоровья и хронических заболеваний, подбор процедур.",
+      offer: "Подбор увеличения губ с учётом ваших черт лица, выбор препарата и объёма для увеличения губ, примерка результата на вашем лице и персональная консультация врача с учётом хронических заболеваний.",
       ctr: "3–5%", conversion: "2–4%", leads: "20–40",
     },
   ];
@@ -272,6 +272,7 @@ function DecisionToolSlide() {
             </section>
             <aside className="hypothesis-intent">
               <strong>{item.conclusion}</strong>
+              {item.number === "01" && <p className="projection-label">Пессимистичный сценарий</p>}
               <dl className="hypothesis-metrics">
                 <div><dt>CTR объявления</dt><dd>{item.ctr}</dd></div>
                 <div><dt>Визит → заявка</dt><dd>{item.conversion}</dd></div>
@@ -473,14 +474,14 @@ export function BeautyPresentation() {
     const deltaX = event.clientX - pointerStart.current.x;
     const deltaY = event.clientY - pointerStart.current.y;
     pointerStart.current = null;
-    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide");
+    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide")?.closest(".beauty-slide");
     if (scrollableAnalysis && scrollableAnalysis.scrollHeight > scrollableAnalysis.clientHeight && Math.abs(deltaY) > Math.abs(deltaX)) return;
     if (Math.abs(deltaY) > 52 && Math.abs(deltaY) > Math.abs(deltaX)) goTo(activeIndex + (deltaY < 0 ? 1 : -1), "y");
     else if (Math.abs(deltaX) > 52) goTo(activeIndex + (deltaX < 0 ? 1 : -1));
   };
 
   const handleWheel = (event: React.WheelEvent) => {
-    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide");
+    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide")?.closest(".beauty-slide");
     if (scrollableAnalysis && scrollableAnalysis.scrollHeight > scrollableAnalysis.clientHeight) return;
     if (!window.matchMedia("(max-width: 760px)").matches || Math.abs(event.deltaY) < 28) return;
     event.preventDefault();
