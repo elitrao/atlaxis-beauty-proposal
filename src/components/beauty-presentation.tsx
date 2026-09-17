@@ -224,39 +224,61 @@ function ValueResearchSlide() {
 }
 
 function DecisionToolSlide() {
+  const hypotheses = [
+    {
+      number: "01", title: "Увидеть результат процедуры",
+      question: "«Как я буду выглядеть после увеличения?»",
+      queries: [["Губы после увеличения", "114 111"], ["Увеличение губ фото", "6 954"]],
+      outcomes: ["Фото результатов", "Примерка на своём лице"],
+      conclusion: "Больше запросов. Слабее связь с покупкой.",
+      intent: "Информационный интерес",
+      explanation: "Интерес к фото и информации не равен готовности записаться.",
+    },
+    {
+      number: "02", title: "Выбрать, как получить результат",
+      question: "«Какие губы мне подойдут и как их получить?»",
+      queries: [["Какие сделать губы", "1 617"], ["Формы губ", "16 638"]],
+      outcomes: ["Выбор формы", "Препарат и объём", "Примерка вариантов", "Мнение специалиста"],
+      conclusion: "Меньше запросов. Ближе к покупке.",
+      intent: "Коммерческий потенциал",
+      explanation: "Выбор решения. Гипотеза: выше доля будущих клиентов.",
+    },
+  ];
   return (
-    <div className="slide-layout extension-slide decision-slide">
-      <div className="decision-copy">
-        <p className="slide-eyebrow">Как анализ спроса меняет продукт</p>
-        <h2 data-slide-title tabIndex={-1}>Люди ищут результат, а не 2 мл препарата</h2>
-
-        <div className="decision-comparison">
-          <article>
-            <span>Поздний вход</span>
-            <h3>«Покажите, как выглядят 2 мл»</h3>
-            <p>Клиент уже выбрал процедуру и объём. Продукт визуализирует принятое решение.</p>
+    <div className="slide-layout demand-analysis-slide">
+      <header className="analysis-heading">
+        <div>
+          <p className="slide-eyebrow">Этап 1 / проверка продуктовых гипотез</p>
+          <h2 data-slide-title tabIndex={-1}>Анализ спроса</h2>
+        </div>
+        <p className="analysis-cluster"><span>Кластер: косметические процедуры</span><strong>На примере увеличения губ</strong></p>
+      </header>
+      <div className="hypothesis-grid">
+        {hypotheses.map((item) => (
+          <article className={`hypothesis-column hypothesis-${item.number}`} key={item.number}>
+            <div className="hypothesis-title">
+              <span className="hypothesis-number">{item.number}</span>
+              <div><span className="analysis-label">Гипотеза {item.number === "01" ? "1" : "2"}</span><h3>{item.title}</h3></div>
+            </div>
+            <p className="hypothesis-question">{item.question}</p>
+            <section className="analysis-queries">
+              <p className="analysis-label">Анализ запросов <span>Частотность в выборке</span></p>
+              {item.queries.map(([query, count]) => <div className="analysis-query" key={query}><span>«{query}»</span><strong>{count}</strong></div>)}
+            </section>
+            <section className="analysis-expectations">
+              <p className="analysis-label">Ожидаемый результат для пользователя</p>
+              <ul>{item.outcomes.map((outcome) => <li key={outcome}><CheckCircle size={18} aria-hidden="true" />{outcome}</li>)}</ul>
+            </section>
+            <aside className="hypothesis-intent">
+              <span className="analysis-label">{item.intent}</span>
+              <strong>{item.conclusion}</strong>
+              <p>{item.explanation}</p>
+            </aside>
           </article>
-          <article className="scenario-strong">
-            <span>Ранний вход</span>
-            <h3>«Хочу такие губы. Что мне нужно?»</h3>
-            <p>Клиент знает только желаемый результат. Продукт подбирает способ и ведёт к записи.</p>
-          </article>
-        </div>
-
-        <div className="demand-proof">
-          <div className="demand-row">
-            <p><strong>114 111</strong><span>ищут, как выглядят губы после увеличения</span></p>
-            <p><strong>16 638</strong><span>сравнивают и выбирают формы губ</span></p>
-          </div>
-          <p className="demand-insight"><span>Что означают цифры</span>Оба крупных кластера описывают внешний результат. Ни один не начинается с объёма препарата.</p>
-        </div>
-
-        <div className="decision-conclusion">
-          <span>Зачем нужен анализ</span>
-          <p>Без него мы бы упаковали узкий симулятор. Данные открывают более ценную задачу: помочь выбрать результат и привести к покупке услуги.</p>
-        </div>
-
+        ))}
       </div>
+      <p className="analysis-takeaway"><span>Зачем анализ</span>Отделить информационный интерес от намерения купить и найти спрос, который может приносить заявки.</p>
+      <p className="analysis-footnote">Долю коммерческого спроса и конверсию проверяем отдельно. Параметры процедуры подтверждает специалист.</p>
     </div>
   );
 }
@@ -445,11 +467,15 @@ export function BeautyPresentation() {
     const deltaX = event.clientX - pointerStart.current.x;
     const deltaY = event.clientY - pointerStart.current.y;
     pointerStart.current = null;
+    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide");
+    if (scrollableAnalysis && scrollableAnalysis.scrollHeight > scrollableAnalysis.clientHeight && Math.abs(deltaY) > Math.abs(deltaX)) return;
     if (Math.abs(deltaY) > 52 && Math.abs(deltaY) > Math.abs(deltaX)) goTo(activeIndex + (deltaY < 0 ? 1 : -1), "y");
     else if (Math.abs(deltaX) > 52) goTo(activeIndex + (deltaX < 0 ? 1 : -1));
   };
 
   const handleWheel = (event: React.WheelEvent) => {
+    const scrollableAnalysis = (event.target as HTMLElement).closest(".demand-analysis-slide");
+    if (scrollableAnalysis && scrollableAnalysis.scrollHeight > scrollableAnalysis.clientHeight) return;
     if (!window.matchMedia("(max-width: 760px)").matches || Math.abs(event.deltaY) < 28) return;
     event.preventDefault();
     if (wheelLocked.current) return;
