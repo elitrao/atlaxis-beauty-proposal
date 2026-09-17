@@ -229,19 +229,21 @@ function DecisionToolSlide() {
       number: "01", title: "Увидеть результат процедуры",
       question: "«Как я буду выглядеть после увеличения?»",
       queries: [["Губы после увеличения", "114 111"], ["Увеличение губ фото", "6 954"]],
-      outcomes: ["Фото результатов", "Примерка на своём лице"],
+      outcomes: ["Запросы на чужие фото", "Генерация одного изображения со своим лицом: заданные препарат и объём"],
       conclusion: "Больше запросов. Слабее связь с покупкой.",
-      intent: "Информационный интерес",
-      explanation: "Интерес к фото и информации не равен готовности записаться.",
+      intent: "Информационный спрос",
+      offer: "Примеры результатов на чужих фото и визуализация на вашем лице — одно изображение с выбранными препаратом и объёмом.",
+      ctr: "3–5%", conversion: "1–2%", leads: "10–20",
     },
     {
       number: "02", title: "Выбрать, как получить результат",
       question: "«Какие губы мне подойдут и как их получить?»",
       queries: [["Какие сделать губы", "1 617"], ["Формы губ", "16 638"]],
-      outcomes: ["Выбор формы", "Препарат и объём", "Примерка вариантов", "Мнение специалиста"],
+      outcomes: ["Подбор визуала с учётом черт лица", "Подбор процедуры, препарата и объёма", "Примерка вариантов на своём лице", "Персональная консультация врача"],
       conclusion: "Меньше запросов. Ближе к покупке.",
-      intent: "Коммерческий потенциал",
-      explanation: "Выбор решения. Гипотеза: выше доля будущих клиентов.",
+      intent: "Коммерческий спрос",
+      offer: "Образ с учётом ваших черт лица. Ваш врач: персональная оценка здоровья и хронических заболеваний, подбор процедур.",
+      ctr: "3–5%", conversion: "2–4%", leads: "20–40",
     },
   ];
   return (
@@ -251,14 +253,13 @@ function DecisionToolSlide() {
           <p className="slide-eyebrow">Этап 1 / проверка продуктовых гипотез</p>
           <h2 data-slide-title tabIndex={-1}>Анализ спроса</h2>
         </div>
-        <p className="analysis-cluster"><span>Кластер: косметические процедуры</span><strong>На примере увеличения губ</strong></p>
       </header>
       <div className="hypothesis-grid">
         {hypotheses.map((item) => (
           <article className={`hypothesis-column hypothesis-${item.number}`} key={item.number}>
             <div className="hypothesis-title">
               <span className="hypothesis-number">{item.number}</span>
-              <div><span className="analysis-label">Гипотеза {item.number === "01" ? "1" : "2"}</span><h3>{item.title}</h3></div>
+              <div><span className="analysis-label">Гипотеза</span><h3>{item.title}</h3></div>
             </div>
             <p className="hypothesis-question">{item.question}</p>
             <section className="analysis-queries">
@@ -266,19 +267,24 @@ function DecisionToolSlide() {
               {item.queries.map(([query, count]) => <div className="analysis-query" key={query}><span>«{query}»</span><strong>{count}</strong></div>)}
             </section>
             <section className="analysis-expectations">
-              <p className="analysis-label">Ожидаемый результат для пользователя</p>
+              <p className="analysis-label">{item.intent}</p>
               <ul>{item.outcomes.map((outcome) => <li key={outcome}><CheckCircle size={18} aria-hidden="true" />{outcome}</li>)}</ul>
             </section>
             <aside className="hypothesis-intent">
-              <span className="analysis-label">{item.intent}</span>
               <strong>{item.conclusion}</strong>
-              <p>{item.explanation}</p>
+              <dl className="hypothesis-metrics">
+                <div><dt>CTR объявления</dt><dd>{item.ctr}</dd></div>
+                <div><dt>Визит → заявка</dt><dd>{item.conversion}</dd></div>
+                <div><dt>Заявок / 1 000 визитов</dt><dd>{item.leads}</dd></div>
+              </dl>
             </aside>
+            <section className="hypothesis-offer">
+              <span className="analysis-label">УТП</span>
+              <p>{item.offer}</p>
+            </section>
           </article>
         ))}
       </div>
-      <p className="analysis-takeaway"><span>Зачем анализ</span>Отделить информационный интерес от намерения купить и найти спрос, который может приносить заявки.</p>
-      <p className="analysis-footnote">Долю коммерческого спроса и конверсию проверяем отдельно. Параметры процедуры подтверждает специалист.</p>
     </div>
   );
 }
